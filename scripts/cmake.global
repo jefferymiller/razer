@@ -20,12 +20,10 @@ set(GENERIC_COMPILE_FLAGS "-O2 -std=c99 -fstack-protector -fstack-check ${WARNIN
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=address")
 
-find_path(LIBUSB_INCLUDE_PATH
-	NAMES libusb.h
-	PATHS "/usr/include/libusb" "/usr/include/libusb-1.0"
-)
-include_directories(AFTER ${LIBUSB_INCLUDE_PATH})
-set(CMAKE_REQUIRED_INCLUDES "${LIBUSB_INCLUDE_PATH};${CMAKE_REQUIRED_INCLUDES}")
+# Use pkgconfig to find libusb-1.0
+find_package(PkgConfig REQUIRED)
+pkg_search_module(LIBUSB REQUIRED libusb-1.0)
+include_directories(AFTER ${LIBUSB_INCLUDE_DIRS})
 
 execute_process(COMMAND pkg-config --variable=systemdsystemunitdir systemd
   OUTPUT_VARIABLE SYSTEMD_UNIT_DIR
