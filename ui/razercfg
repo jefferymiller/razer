@@ -15,6 +15,8 @@
 #   GNU General Public License for more details.
 
 import sys
+# XXX Where I know the python package is installed. FIXME
+sys.path.append('/usr/local/lib/python3.5/site-packages')
 import os
 import getopt
 import time
