@@ -1,4 +1,5 @@
 include("${razer_SOURCE_DIR}/scripts/cmake.global")
+include(GNUInstallDirs)
 
 add_library(razer SHARED
 	    buttonmapping.c
@@ -28,7 +29,7 @@ add_definitions("-Du_int8_t=uint8_t -Du_int16_t=uint16_t -Du_int32_t=uint32_t")
 
 target_link_libraries(razer usb-1.0)
 
-install(TARGETS razer DESTINATION lib)
+install(TARGETS razer DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if (NOT DEFINED ENV{RPM_BUILD_ROOT} AND NOT DEFINED ENV{RAZERCFG_PKG_BUILD})
 	install_exec_cmd("ldconfig"
